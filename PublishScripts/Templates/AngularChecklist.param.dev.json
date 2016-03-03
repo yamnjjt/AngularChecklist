@@ -1,0 +1,32 @@
+{
+  "siteName": {
+    "value": "angularchecklist"
+  },
+  "hostingPlanName": {
+    "value": "jtappsvc01"
+  },
+  "siteLocation": {
+    "value": "Australia East"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "serverName": {
+    "value": "jtsqlsvr"
+  },
+  "serverLocation": {
+    "value": "East Asia"
+  },
+  "administratorLogin": {
+    "value": "vmadmin"
+  },
+  "administratorLoginPassword": {
+    "value": "Code123!"
+  },
+  "databaseName": {
+    "value": "angularchecklist_db"
+  }
+}
