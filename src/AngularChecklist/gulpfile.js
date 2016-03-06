@@ -1,8 +1,8 @@
-﻿/// <binding AfterBuild='moveToLibs, moveToApps' Clean='clean' />
-
-var gulp = require('gulp');
+﻿var gulp = require('gulp');
 var del = require('del');
+var ts = require('gulp-typescript');
 
+var tsProject = ts.createProject('./scripts/tsconfig.json');
 
 var paths = {
     npmSrc: "./node_modules/",
@@ -28,15 +28,27 @@ var appsToMove = [
     paths.tsSrc + '*.css'
 ];
 
-gulp.task('moveToLibs', function () {
-    return gulp.src(libsToMove).pipe(gulp.dest(paths.libTarget));
-});
-
-
-gulp.task('moveToApps', function () {
-    return gulp.src(appsToMove).pipe(gulp.dest(paths.appTarget));
-});
-
 gulp.task('clean', function () {
     return del([paths.libTarget, paths.appTarget]);
 });
+
+// node packages
+gulp.task('moveToLibs', ['clean'], function () {
+    return gulp.src(libsToMove).pipe(gulp.dest(paths.libTarget));
+});
+
+// htmls
+gulp.task('moveToApps', ['clean'], function () {
+    return gulp.src(appsToMove).pipe(gulp.dest(paths.appTarget));
+});
+
+// compile ts and deploy to wwwroot
+gulp.task('tscompile', ['build'],function () {
+
+    var tsResult = tsProject.src()
+        .pipe(ts(tsProject));
+    
+    return tsResult.js.pipe(gulp.dest(paths.appTarget));
+});
+
+gulp.task('build', ['moveToLibs', 'moveToApps']);
